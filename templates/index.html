@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>On Call Roaster</title>
+    <style>
+      body {
+        background-color: #f2f2f2;
+        font-family: Arial, sans-serif;
+      }
+      
+      h1 {
+        text-align: center;
+        margin-top: 50px;
+      }
+      
+      .button-group {
+        display: flex;
+        justify-content: center;
+        margin-top: 50px;
+      }
+      
+      .button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin: 0 10px;
+        font-size: 16px;
+      }
+      
+      .button:hover {
+        background-color: #00b400;
+      }
+      
+      nav {
+        background-color: #333;
+        color: white;
+        padding: 10px;
+      }
+      
+      nav ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+      
+      nav li {
+        float: left;
+      }
+      
+      nav li a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+      }
+      
+      nav li a:hover {
+        background-color: #111;
+      }
+      
+      .active {
+        background-color: #4CAF50;
+      }
+    </style>
+  </head>
+  <body>
+        
+    <nav>
+        <ul>
+          <li><a href="{{url_for('index')}}" class="active">Home</a></li>
+          <li><a href="{{url_for('create_user')}}">Post</a></li>
+          <li><a href="{{url_for('get_user')}}">Get</a></li>
+          <li><a href="{{url_for('search')}}">Put</a></li>
+          <li><a href="{{url_for('search')}}">Delete</a></li>
+          <li><a href="{{url_for('currentoncall')}}" >Current On Call</a></li>
+          <li style="float:right"><a href="#company">PhonePe</a></li>
+        </ul>
+      </nav>
+    <h1>On Call Roster</h1>
+    
+    <div class="button-group">
+      <a href="{{url_for('create_user')}}"><button class="button">Post</button></a>
+      <a href="{{url_for('get_user')}}"><button class="button">Get</button></a>
+      <a href="{{url_for('update_user')}}"><button class="button">Put</button></a>
+      <a href="{{url_for('delete_user')}}"><button class="button">Delete</button></a>
+      <a href="{{url_for('currentoncall')}}"><button class="button">CURRENT ON CALL</button></a>
+    </div>
+
+  </body>
+</html>

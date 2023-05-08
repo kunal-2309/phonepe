@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Edit Record</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    
+        <nav>
+            <ul>
+              <li><a href="{{url_for('index')}}">Home</a></li>
+              <li><a href="{{url_for('create_user')}}" class="active">Post</a></li>
+              <li><a href="{{url_for('get_user')}}">Get</a></li>
+              <li><a href="{{url_for('search')}}">Put</a></li>
+              <li><a href="{{url_for('search')}}">Delete</a></li>
+			  <li><a href="{{url_for('currentoncall')}}">Current On Call</a></li>
+              <li style="float:right"><a href="#company">PhonePe</a></li>
+            </ul>
+          </nav>
+        <h1>On Call Roster</h1>
+	<h1>Edit Record</h1>
+    <!-- <h2>{{record}}</h2> -->
+	<form action="{{url_for('newupdate',id=record['_id'])}}" method="POST">
+		<label for="emp_id">Employee ID:</label><br>
+		<input type="text" id="emp_id" name="emp_id" value="{{record['_source']['Employee_Id']}}" readonly><br><br>
+
+		<label for="emp_name">Employee Name:</label><br>
+		<input type="text" id="emp_name" name="emp_name" value="{{record['_source']['Employee_Name']}}" readonly><br><br>
+
+		<label for="role">Role:</label><br>
+		<input type="text" id="role" name="role" value="{{record['_source']['Role']}}"><br><br>
+
+		<label for="phone">Phone:</label><br>
+		<input type="text" id="phone" name="phone" value="{{record['_source']['Phone']}}" readonly><br><br>
+        <label for="phone">Team:</label><br>
+		<input type="text" id="Team" name="Team" value="{{record['_source']['Team_Name']}}" readonly><br><br>
+
+		<label for="email">Email:</label><br>
+		<input type="email" id="email" name="email" value="{{record['_source']['Email']}}" readonly><br><br>
+
+		<label for="start_date">Start Date:</label><br>
+		<input type="date" id="start_date" name="start_date" value="{{record['_source']['Start_Date']}}"><br><br>
+
+		<label for="end_date">End Date:</label><br>
+		<input type="date" id="end_date" name="end_date" value="{{record['_source']['End_Date']}}"><br><br>
+
+		<input type="submit" value="Update">
+	</form>
+	
+	
+</body>
+</html>

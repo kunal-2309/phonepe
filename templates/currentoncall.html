@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Enter Team Name</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+</head>
+<body>
+    <nav>
+        <ul>
+          <li><a href="{{url_for('index')}}">Home</a></li>
+          <li><a href="{{url_for('create_user')}}">Post</a></li>
+          <li><a href="{{url_for('get_user')}}">Get</a></li>
+          <li><a href="{{url_for('search')}}" >Put</a></li>
+          <li><a href="{{url_for('search')}}">Delete</a></li>
+          <li><a href="{{url_for('currentoncall')}}" class="active">Current On Call</a></li>
+          <li style="float: right"><a href="#company">PhonePe</a></li>
+        </ul>
+      </nav>
+      <h1> On Call Roster</h1>
+      
+<form action="{{url_for('currentoncall')}}" method="POST">
+    <div class="container">
+        <label>Team</label>
+        <select id="team" name = 'Team_Name' required>
+            <option value="">Select a team...</option>
+              <option value="Networking">Networking</option>
+              <option value="Big Data">Big Data</option>
+              <option value="Database">Database</option>
+              <option value="Payment">Payment</option>
+        </select>
+<input type="submit" value="submit">
+</div>
+</form>
+{% if hits %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Employee ID</th>
+                    <th>Employee Name</th>
+                    <th>Role</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    
+                    <th>Team</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for hit in hits %}
+                    <tr>
+                        <td>{{hit['_source']['Employee_Id']}}</td>
+                        <td>{{hit['_source']['Employee_Name']}}</td>
+                        <td>{{hit['_source']['Role']}}</td>
+                        <td>{{hit['_source']['Phone']}}</td>
+                        <td>{{hit['_source']['Email']}}</td>
+                        
+                        <td>{{hit['_source']['Team_Name']}}</td>
+                        
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    
+    {% endif %}
+
+</body>
+</html>

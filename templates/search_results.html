@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    
+        <nav>
+            <ul>
+              <li><a href="{{url_for('index')}}">Home</a></li>
+              <li><a href="{{url_for('create_user')}}">Post</a></li>
+              <li><a href="{{url_for('get_user')}}">Get</a></li>
+              <li><a href="{{url_for('search')}}">Put</a></li>
+              <li><a href="{{url_for('search')}}">Delete</a></li>
+              <li><a href="{{url_for('currentoncall')}}">Current On Call</a></li>
+              <li style="float:right"><a href="#company">PhonePe</a></li>
+            </ul>
+          </nav>
+        <h1>On Call Roster</h1>
+    <h1>Search Results</h1>
+    <!-- <h2>{{results}}</h2>
+    <h3>{{results[0]['_source']['Employee_Id']}}</h3> -->
+    {% if results %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Record_id</th>
+                    <th>Employee ID</th>
+                    <th>Employee Name</th>
+                    <th>Role</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Team</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for result in results %}
+                    <tr>
+                        <td>{{result['_id']}}</td>
+                        <td>{{result['_source']['Employee_Id']}}</td>
+                        <td>{{result['_source']['Employee_Name']}}</td>
+                        <td>{{result['_source']['Role']}}</td>
+                        <td>{{result['_source']['Phone']}}</td>
+                        <td>{{result['_source']['Email']}}</td>
+                        <td>{{result['_source']['Start_Date']}}</td>
+                        <td>{{result['_source']['End_Date']}}</td>
+                        <td>{{result['_source']['Team_Name']}}</td>
+                        <td>
+                            <a href="{{ url_for('newupdate', id=result['_id']) }}"><button class="btn-green">Update</button></a>
+                            <a href="{{ url_for('newdelete', id=result['_id']) }}"><button class="btn-red">Delete</button></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+</body>
+</html>

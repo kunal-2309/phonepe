@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+	<title>Old data</title>
+</head>
+<body>
+	<nav>
+		<ul>
+		  <li><a href="{{url_for('index')}}">Home</a></li>
+		  <li><a href="{{url_for('create_user')}}">Post</a></li>
+		  <li><a href="{{url_for('get_user')}}">Get</a></li>
+		  <li><a href="{{url_for('search')}}" class="active">Put</a></li>
+		  <li><a href="{{url_for('search')}}">Delete</a></li>
+		  <li><a href="{{url_for('currentoncall')}}">Current On Call</a></li>
+		  <li style="float: right"><a href="#company">PhonePe</a></li>
+		</ul>
+	  </nav>
+	  <h1>On Call Roster</h1>
+<form action="{{url_for('update_user')}}" method="POST">
+	<div class="container">
+	<label>Employee id</label>
+	<input type='text' name='Employee_Id' value="{{data['Employee_Id']}}">
+	<label>Employee Name</label>
+	<input type = 'text' name='Employee_Name' value="{{data['Employee_Name']}}">
+	<label>Role</label>
+	<input type='text' name = 'Role' value="{{data['Role']}}">
+		<label>Phone Numer</label>
+	<input type='text' name = 'Phone' value="{{data['Phone']}}">
+		<label>Team_Name</label>
+	<input type ='text' name = 'Team_Name' value="{{data['Team_Name']}}">
+		<label>Email</label>
+	<input type='text' name='Email' value="{{data['Email']}}">
+		<label>Start Date</label>
+
+	<input type="date" name= 'Start_Date' value="{{data['Start_Date']}}">
+		<label>End Date</label>
+	<input type="hidden" value="{{id}}" name="id">
+	<input type="date" name="End_Date" value="{{data['End_Date']}}">
+	<input type="submit" value="submit" />
+</div>
+</form>
+</body>
+</html>

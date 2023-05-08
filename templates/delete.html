@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Enter Employee ID</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+</head>
+<body>
+    <nav>
+        <ul>
+          <li><a href="{{url_for('index')}}">Home</a></li>
+          <li><a href="{{url_for('create_user')}}">Post</a></li>
+          <li><a href="{{url_for('get_user')}}">Get</a></li>
+          <li><a href="{{url_for('update_user')}}" >Put</a></li>
+          <li><a href="{{url_for('delete_user')}}" class="active">Delete</a></li>
+          <li><a href="{{url_for('currentoncall')}}" class="active">Current On Call</a></li>
+          <li style="float: right"><a href="#company">PhonePe</a></li>
+        </ul>
+      </nav>
+      <h1> On Call Roster</h1>
+<form action="{{url_for('deleter')}}" method="POST">
+    <div class="container">
+        <label>Employee id</label>
+<input type="text" name="Employee_Id">
+<input type="submit" value="submit">
+</div>
+</form>
+</body>
+</html>

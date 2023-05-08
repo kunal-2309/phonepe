@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+	<title>Old data</title>
+</head>
+<body>
+<!-- <h1> {{data}}</h1> -->
+<table>
+<thead>
+	<tr>
+		<th>Employee_Id</th>
+		<th>Employee_Name</th>
+		<th>Team_Name</th>
+		<th>Start_Date</th>
+		<th>End_Date</th>
+	</tr>
+</thead>
+<tbody>
+	<tr>
+	<td>{{data['Employee_Id']}}</td>
+	<td>{{data['Employee_Name']}}</td>
+	<td>{{data['Team_Name']}}</td>
+	<td>{{data['Start_Date']}}</td>
+	<td>{{data['End_Date']}}</td>
+</tr>
+</tbody>	
+</table>
+<form action="{{url_for('delete_user')}}" method="POST">
+	<!-- <label>Employee id</label>
+	<input type='text' name='Employee_Id' value="{{data['Employee_Id']}}">
+	<label>Employee Name</label>
+	<input type = 'text' name='Employee_Name' value="{{data['Employee_Name']}}">
+	<label>Role</label>
+	<input type='text' name = 'Role' value="{{data['Role']}}">
+		<label>Phone Numer</label>
+	<input type='text' name = 'Phone' value="{{data['Phone']}}">
+		<label>Team_Name</label>
+	<input type ='text' name = 'Team_Name' value="{{data['Team_Name']}}">
+		<label>Email</label>
+	<input type='text' name='Email' value="{{data['Email']}}">
+		<label>Start Date</label> -->
+
+	<!-- <input type="date" name= 'Start_Date' value="{{data['Start_Date']}}">
+		<label>End Date</label> -->
+	<input type="hidden" value="{{id}}" name="id">
+	<!-- <input type="date" name="End_Date" value="{{data['End_Date']}}"> -->
+	<button onclick="submit">Delete</button>
+</form>
+</body>
+</html>

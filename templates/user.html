@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <title>date selector</title>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="{{url_for('index')}}">Home</a></li>
+        <li><a href="{{url_for('create_user')}}">Post</a></li>
+        <li><a href="{{url_for('get_user')}}" class="active">Get</a></li>
+        <li><a href="{{url_for('search')}}">Put</a></li>
+        <li><a href="{{url_for('search')}}">Delete</a></li>
+        <li style="float: right"><a href="#company">PhonePe</a></li>
+      </ul>
+    </nav>
+    <h1>On Call Roster</h1>
+    <form action="{{url_for('get_user')}}" method="POST">
+      <div class="container">
+        <label>Start Date</label>
+        <input type="date" name="Start_Date" />
+        <label>End Date</label>
+        <input type="date" name="End_Date" />
+        <input type="submit" value="submit" />
+      </div>
+    </form>
+
+       
+	{% if hits %}
+      <table>
+        <thead>
+          <tr>
+            {% for key in hits[0]['_source'].keys() %}
+              <th>{{ key }}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for hit in hits %}
+            <tr>
+              {% for value in hit['_source'].values() %}
+                <td>{{ value }}</td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+  </body>
+</html>
