@@ -24,40 +24,39 @@ logger.addHandler(fileHandler)
 app = Flask(__name__)
 
 
-
-index_settings = {
-    "settings": {
-        "number_of_replicas": 2
-    },
-    "mappings": {
-        "properties": {
-            "Employee_Name": {
-                "type": "text"
-            },
-            "Phone": {
-                "type": "text"
-            },
-            "Start_Date": {
-                "type": "date"
-            },
-            "End_Date": {
-                "type": "date"
-            },
-            "Email": {
-                "type": "text"
-            },
-            "Employee_Id": {
-                "type": "text"
-            },
-            "Team_Name": {
-                "type": "text"
-            },
-            "Role": {
-                "type": "text"
-            }
-        }
-    }
-}
+# index_settings = {
+#     "settings": {
+#         "number_of_replicas": 2
+#     },
+#     "mappings": {
+#         "properties": {
+#             "Employee_Name": {
+#                 "type": "text"
+#             },
+#             "Phone": {
+#                 "type": "text"
+#             },
+#             "Start_Date": {
+#                 "type": "date"
+#             },
+#             "End_Date": {
+#                 "type": "date"
+#             },
+#             "Email": {
+#                 "type": "text"
+#             },
+#             "Employee_Id": {
+#                 "type": "text"
+#             },
+#             "Team_Name": {
+#                 "type": "text"
+#             },
+#             "Role": {
+#                 "type": "text"
+#             }
+#         }
+#     }
+# }
 
 
 INDEX_NAME = 'users'
@@ -93,8 +92,11 @@ def create_user():
             "Role": Role,
             "Email": Email
         }
-        result = es.index(index=INDEX_NAME, body=document)
-        return render_template('success.html', id=result['_id'])
+        try:
+            result = es.index(index=INDEX_NAME, body=document)
+            return render_template('success.html', id=result['_id'])
+        except:
+            return render_template('error.html')
 # Read a document
 
 
@@ -163,10 +165,13 @@ def get_user():
                 }
             }
         }
-        result = es.search(index='users', body=query)
-        hits = result['hits']['hits']
-        # return result['hits']['hits']
-        return render_template('user.html', hits=hits)
+        try:
+            result = es.search(index='users', body=query)
+            hits = result['hits']['hits']
+            # return result['hits']['hits']
+            return render_template('user.html', hits=hits)
+        except:
+            return render_template('error.html')
     else:
         return render_template('user.html')
 # Update a document
@@ -195,9 +200,12 @@ def update_user():
             "Role": Role,
             "Email": Email
         }
-    id = request.form['id']
-    result = es.update(index=INDEX_NAME, id=id, body={'doc': document})
-    return "Successfully updated"
+    try:
+        id = request.form['id']
+        result = es.update(index=INDEX_NAME, id=id, body={'doc': document})
+        return "Successfully updated"
+    except:
+        return render_template('error.html')
 
 
 @app.route('/update', methods=['POST'])
@@ -210,13 +218,16 @@ def updater():
             }
         }
     }
-    result = es.search(index='users', body=query)
-    if result['hits']['total']['value'] == 0:
-        return "Record not found"
-    else:
-        result = dict(result)
-        id = result['hits']['hits'][0]['_id']
-        return render_template('update.html', data=result['hits']['hits'][0]['_source'], id=id)
+    try:
+        result = es.search(index='users', body=query)
+        if result['hits']['total']['value'] == 0:
+            return "Record not found"
+        else:
+            result = dict(result)
+            id = result['hits']['hits'][0]['_id']
+            return render_template('update.html', data=result['hits']['hits'][0]['_source'], id=id)
+    except:
+        return render_template('error.html')
 # Delete a document
 
 
@@ -224,9 +235,12 @@ def updater():
 def delete_user():
     # if request.method=="POST":
     if request.method == 'POST':
-        id = request.form['id']
-        result = es.delete(index=INDEX_NAME, id=id)
-        return "deleted successfully"
+        try:
+            id = request.form['id']
+            result = es.delete(index=INDEX_NAME, id=id)
+            return "deleted successfully"
+        except:
+            return render_template('error.html')
     else:
         return render_template('delete.html')
 
@@ -241,26 +255,32 @@ def deleter():
             }
         }
     }
-    result = es.search(index='users', body=query)
-    if result['hits']['total']['value'] == 0:
-        return "Record not found"
-    else:
-        result = dict(result)
-        id = result['hits']['hits'][0]['_id']
-        es.delete(index='users', id=id)
-        return "deleted successfully"
-        # return render_template('deleted.html', data=result['hits']['hits'][0]['_source'], id=id)
+    try:
+        result = es.search(index='users', body=query)
+        if result['hits']['total']['value'] == 0:
+            return "Record not found"
+        else:
+            result = dict(result)
+            id = result['hits']['hits'][0]['_id']
+            es.delete(index='users', id=id)
+            return "deleted successfully"
+            # return render_template('deleted.html', data=result['hits']['hits'][0]['_source'], id=id)
+    except:
+        return render_template('error.html')
 
 def search_employee(employee_id):
-    query = {
-        "query": {
-            "match": {
-                "Employee_Id": employee_id
+    try:
+        query = {
+            "query": {
+                "match": {
+                    "Employee_Id": employee_id
+                }
             }
         }
-    }
-    result = es.search(index="users", body=query)
-    return result['hits']['hits']
+        result = es.search(index="users", body=query)
+        return result['hits']['hits']
+    except:
+        return render_template('error.html')
 
 
 @app.route('/search', methods=['GET', 'POST'])
@@ -286,7 +306,10 @@ def search():
 @app.route('/update/<string:id>', methods=['GET', 'POST'])
 def newupdate(id):
     # Get record from Elasticsearch by ID
-    record = es.get(index='users', id=id)
+    try:
+        record = es.get(index='users', id=id)
+    except:
+        return render_template('error.html')
 
     if request.method == 'POST':
         # Update record with form data
@@ -310,40 +333,48 @@ def newupdate(id):
 @app.route('/delete/<string:id>', methods=['GET', 'POST', 'DELETE'])
 def newdelete(id):
     # Delete record from Elasticsearch by ID
-    es.delete(index='users', id=id)
+    try:
+        es.delete(index='users', id=id)
 
-    # Redirect to search page
-    return redirect(url_for('search'))
+        # Redirect to search page
+        return redirect(url_for('search'))
+    except:
+        return render_template('error.html')
 
-@app.route('/currentoncall',methods=['GET','POST'])
+
+
+@app.route('/currentoncall', methods=['GET', 'POST'])
 def currentoncall():
-    if request.method=='POST':
+    if request.method == 'POST':
         team_name = request.form.get('Team_Name')
         current_date = datetime.now()
         start_date = current_date.date()
         end_date = current_date.date()
-    
+
         # Search Elasticsearch for records matching the criteria
-        res = es.search(index='users', body={
-            'query': {
-                'bool': {
-                    'must': [
-                        {'match': {'Team_Name': team_name}},
-                        {'range': {'Start_Date': {'lte': start_date}}},
-                        {'range': {'End_Date': {'gte': end_date}}}
-                    ]
+        try:
+            res = es.search(index='users', body={
+                'query': {
+                    'bool': {
+                        'must': [
+                            {'match': {'Team_Name': team_name}},
+                            {'range': {'Start_Date': {'lte': start_date}}},
+                            {'range': {'End_Date': {'gte': end_date}}}
+                        ]
+                    }
                 }
-            }
-        })
-        hits = res['hits']['hits']
-        if len(hits) == 0:
-            # No records found
-            return 'No results found'
-        return render_template('currentoncall.html',hits=hits)
+            })
+            hits = res['hits']['hits']
+            if len(hits) == 0:
+                # No records found
+                return 'No results found'
+            return render_template('currentoncall.html', hits=hits)
+        except:
+            return render_template('error.html')
     else:
         return render_template('currentoncall.html')
 
 
 # Run the Flask app
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0',debug=True,port=5000)

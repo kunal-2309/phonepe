@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <title>Enter Employee ID</title>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="{{url_for('index')}}">Home</a></li>
+        <li><a href="{{url_for('create_user')}}">Post</a></li>
+        <li><a href="{{url_for('get_user')}}">Get</a></li>
+        <li><a href="{{url_for('update_user')}}">Put</a></li>
+        <li><a href="{{url_for('delete_user')}}">Delete</a></li>
+        <li><a href="{{url_for('currentoncall')}}" class="active">Current On Call</a></li>
+        <li style="float: right"><a href="#company">PhonePe</a></li>
+      </ul>
+    </nav>
+	<h1>On Call Roaster</h1>
+    <h1> Sorry we are not able to connect to db. Try after sometime</h1>
+  </body>
+</html>
